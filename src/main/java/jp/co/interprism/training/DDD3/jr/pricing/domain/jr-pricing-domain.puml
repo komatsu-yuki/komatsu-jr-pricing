@@ -1,0 +1,248 @@
+@startuml
+skinparam linetype ortho
+'left to right direction
+
+
+package fare {
+
+    package unit {
+        interface FareUnit
+
+        class FareYen implements FareUnit
+        class FareRate
+        class FareCount
+    }
+
+    package total {
+        interface TotalFare
+        class OrdinaryFare implements TotalFare
+        class OrdinaryFareFactory
+    }
+
+    package child {
+        enum Age
+        class ChildFare implements TotalFare
+    }
+
+    package basic {
+        class BasicFare
+        class BasicFareYen implements FareUnit
+
+        interface BasicFareFactory <<Factory>>
+    }
+
+    package surcharge.superexpress {
+        interface SuperExpressSurcharge
+        class SuperExpressSurchargeYen implements FareUnit
+        interface SuperExpressSurchargeFactory <<Factory>>
+        enum SuperExpressName
+
+        package seat {
+            enum Seat
+
+            package reserved {
+                class SuperExpressSurchargeReservedSeat implements SuperExpressSurcharge
+                class AdditionalCharge
+            }
+
+            package free {
+                class SuperExpressSurchargeFreeSeat implements SuperExpressSurcharge
+            }
+        }
+    }
+
+    package discount {
+        interface Discount
+        class DiscountedFare implements TotalFare
+
+        package round.trip {
+            class RoundTripDiscount implements Discount
+        }
+        package group {
+            class GroupDiscount implements Discount
+            
+            class Group
+            class MembersCount
+            class AdultsCount
+            class ChildrenCount
+
+            class GroupDomainService
+        }
+    }
+}
+
+
+package boarding {
+    package section {
+        class BoardingSection
+    
+        enum Station
+        class OperatingKilometer
+    }
+
+    package date {
+        class BoardingDate
+        enum Season
+    }
+}
+
+
+BasicFareYen --o BasicFare
+SuperExpressSurchargeYen --o SuperExpressSurcharge
+
+basic <|--- total
+surcharge.superexpress <|--- total
+
+OrdinaryFareFactory -> OrdinaryFare
+BasicFare <- BasicFareFactory
+SuperExpressSurcharge <- SuperExpressSurchargeFactory
+SuperExpressSurchargeReservedSeat o-- AdditionalCharge
+
+DiscountedFare o- Discount
+OrdinaryFare --o ChildFare
+
+
+/'レイアウト'/
+
+Station -[hidden] OperatingKilometer
+
+SuperExpressSurcharge -[hidden]- seat
+Seat -[hidden]- reserved
+free -[hidden] reserved
+
+basic -[hidden] surcharge.superexpress
+
+
+total -[hidden]---- child
+total -[hidden]---- discount
+
+
+/' レイアウト終 '/
+
+
+enum Station {
+    - operationKilometer
+}
+
+class BoardingSection {
+    + calculateOperatingKilometer()
+}
+
+class BoardingDate {
+    + getSeason()
+}
+
+interface FareUnit {
+    + plus(fareYen)
+    + minus(fareYen)
+    + times(fareReta)
+    + times(fareCount)
+}
+
+
+class FareYen {
+    - value
+}
+
+class FareRate {
+    - value
+}
+
+
+class BasicFareYen {
+    - fareYen
+}
+
+class BasicFare {
+    + getBasicFare()
+}
+
+class SuperExpressSurchargeYen {
+    - fareYen
+}
+
+interface SuperExpressSurcharge {
+    + calculateSuperExpressSurchargeYen()
+}
+
+
+
+enum SuperExpressName {
+    + hasAdditionalCharge()
+}
+
+
+
+
+
+interface TotalFare {
+    + getBasicFare()
+    + getSuperExpressSurcharge()
+    + {default} sumFareYen()
+}
+
+class OrdinaryFare {
+    - basicFareYen
+    - superExpressSurchargeYen
+}
+
+class OrdinaryFareFactory {
+    - basicFareFactory
+    - superExpressSurchargeFactory
+}
+
+class ChildFare {
+    - ordinaryFare
+}
+
+
+interface SuperExpressSurcharge {
+
+}
+
+
+
+
+
+interface Discount {
+    + isAvailable()
+    + discountBasicFareYen()
+    + discountSuperExpressSurchargeYen()
+    + discountBasicFareYenForOneTime()
+    + discountSuperExpressSurchargeYenForOneTime()
+}
+
+class DiscountedFare {
+    - totalFare
+    - discount
+}
+
+
+class RoundTripDiscount {
+    - oneWayOperatingKilometer
+}
+
+
+class GroupDiscount {
+    - group
+    - BoardingDate
+}
+
+class Group {
+    - adultsCount
+    - childrenCount
+}
+
+class AdultsCount {
+    - membersCount
+}
+
+class ChildrenCount {
+    - membersCount
+}
+
+class MembersCount {
+    - FareCount
+}
+
+@enduml
