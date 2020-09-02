@@ -104,27 +104,27 @@ public class GroupDiscount implements Discount {
     }
 
     @Override
-    public BasicFareYen discountBasicFareYen(BasicFareYen basicFareYen) {
+    public BasicFareYen calculateBasicFareYen(BasicFareYen basicFareYen) {
         Group groupForPayment = getGroupForPayment();
-        BasicFareYen discountedYen = discountBasicFareYenForOneTime(basicFareYen);
+        BasicFareYen discountedYen = calculateBasicFareYenForOneTime(basicFareYen);
         return sumBasicFareYenForGroup(discountedYen, groupForPayment);
     }
 
     @Override
-    public SuperExpressSurchargeYen discountSuperExpressSurchargeYen(SuperExpressSurchargeYen superExpressSurchargeYen) {
+    public SuperExpressSurchargeYen calculateSuperExpressSurchargeYen(SuperExpressSurchargeYen superExpressSurchargeYen) {
         Group groupForPayment = getGroupForPayment();
-        SuperExpressSurchargeYen discountedYen = discountSuperExpressSurchargeYenForOneTime(superExpressSurchargeYen);
+        SuperExpressSurchargeYen discountedYen = calculateSuperExpressSurchargeYenForOneTime(superExpressSurchargeYen);
         return sumSuperExpressSurchargeYenForGroup(discountedYen, groupForPayment);
     }
 
     @Override
-    public BasicFareYen discountBasicFareYenForOneTime(BasicFareYen basicFareYen) {
+    public BasicFareYen calculateBasicFareYenForOneTime(BasicFareYen basicFareYen) {
         if (inGroupPeak()) return basicFareYen.times(DISCOUNT_RATE_IN_GROUP_PEAK);
         return basicFareYen.times(DISCOUNT_RATE_IN_GROUP_REGULAR);
     }
 
     @Override
-    public SuperExpressSurchargeYen discountSuperExpressSurchargeYenForOneTime(SuperExpressSurchargeYen superExpressSurchargeYen) {
+    public SuperExpressSurchargeYen calculateSuperExpressSurchargeYenForOneTime(SuperExpressSurchargeYen superExpressSurchargeYen) {
         return superExpressSurchargeYen;
     }
 }

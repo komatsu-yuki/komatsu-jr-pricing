@@ -9,15 +9,17 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class SuperExpressSurchargeReservedSeat implements SuperExpressSurcharge {
+    private static final SuperExpressSurchargeYen CHANGE = new SuperExpressSurchargeYen(new FareYen(200));
+
     private final SuperExpressSurchargeYen superExpressSurchargeYen;
     private final AdditionalCharge additionalCharge;
     private final SuperExpressName superExpressName;
     private final Season season;
 
     private SuperExpressSurchargeYen changeForSeason() {
-        SuperExpressSurchargeYen change = new SuperExpressSurchargeYen(new FareYen(200));
-        if (season.isPeak()) return superExpressSurchargeYen.plus(change);
-        if (season.isOffPeak()) return superExpressSurchargeYen.minus(change);
+
+        if (season.isPeak()) return superExpressSurchargeYen.plus(CHANGE);
+        if (season.isOffPeak()) return superExpressSurchargeYen.minus(CHANGE);
         return superExpressSurchargeYen;
     }
 

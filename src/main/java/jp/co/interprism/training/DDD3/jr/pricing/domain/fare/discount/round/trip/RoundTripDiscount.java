@@ -22,22 +22,22 @@ public class RoundTripDiscount implements Discount {
     }
 
     @Override
-    public BasicFareYen discountBasicFareYen(BasicFareYen basicFareYen) {
-        return discountBasicFareYenForOneTime(basicFareYen).times(ROUND_TRIP_COUNT);
+    public BasicFareYen calculateBasicFareYen(BasicFareYen basicFareYen) {
+        return calculateBasicFareYenForOneTime(basicFareYen).times(ROUND_TRIP_COUNT);
     }
 
     @Override
-    public SuperExpressSurchargeYen discountSuperExpressSurchargeYen(SuperExpressSurchargeYen superExpressSurchargeYen) {
-        return discountSuperExpressSurchargeYenForOneTime(superExpressSurchargeYen).times(ROUND_TRIP_COUNT);
+    public SuperExpressSurchargeYen calculateSuperExpressSurchargeYen(SuperExpressSurchargeYen superExpressSurchargeYen) {
+        return calculateSuperExpressSurchargeYenForOneTime(superExpressSurchargeYen).times(ROUND_TRIP_COUNT);
     }
 
     @Override
-    public BasicFareYen discountBasicFareYenForOneTime(BasicFareYen basicFareYen) {
+    public BasicFareYen calculateBasicFareYenForOneTime(BasicFareYen basicFareYen) {
         return basicFareYen.times(DISCOUNT_BASIC_FARE_RATE);
     }
 
     @Override
-    public SuperExpressSurchargeYen discountSuperExpressSurchargeYenForOneTime(SuperExpressSurchargeYen superExpressSurchargeYen) {
+    public SuperExpressSurchargeYen calculateSuperExpressSurchargeYenForOneTime(SuperExpressSurchargeYen superExpressSurchargeYen) {
         return superExpressSurchargeYen;
     }
 }
