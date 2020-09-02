@@ -16,12 +16,20 @@ public class BoardingDate {
         return Season.REGULAR;
     }
 
+    public boolean isAfter(BoardingDate that) {
+        return this.localDate.isAfter(that.localDate);
+    }
+
+    public boolean isBefore(BoardingDate that) {
+        return this.localDate.isBefore(that.localDate);
+    }
+
     //TODO 境界のチェック
     private boolean isPeak() {
         int year = localDate.getYear();
         if (localDate.getMonthValue() == 12) {
-            LocalDate peekStartDate = LocalDate.of(year, 12, 25);
-            return localDate.isAfter(peekStartDate);
+            LocalDate peakStartDate = LocalDate.of(year, 12, 25);
+            return localDate.isAfter(peakStartDate);
         }
         if (localDate.getMonthValue() == 1) {
             LocalDate peekEndDate = LocalDate.of(year, 1, 10);

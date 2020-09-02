@@ -13,12 +13,12 @@ public class DiscountedFare implements TotalFare {
     @Override
     public BasicFareYen getBasicFareYen() {
         if (!discount.isAvailable()) throw new IllegalArgumentException("割引条件を満たしてません");
-        return discount.discountBasicFareYen(totalFare.getBasicFareYen());
+        return discount.calculateBasicFareYen(totalFare.getBasicFareYen());
     }
 
     @Override
     public SuperExpressSurchargeYen getSuperExpressSurchargeYen() {
         if (!discount.isAvailable()) throw new IllegalArgumentException("割引条件を満たしてません");
-        return discount.discountSuperExpressSurchargeYen(totalFare.getSuperExpressSurchargeYen());
+        return discount.calculateSuperExpressSurchargeYen(totalFare.getSuperExpressSurchargeYen());
     }
 }

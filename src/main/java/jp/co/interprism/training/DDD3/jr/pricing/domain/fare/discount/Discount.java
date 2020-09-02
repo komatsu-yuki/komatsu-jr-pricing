@@ -6,11 +6,11 @@ import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpr
 public interface Discount {
     boolean isAvailable();
 
-    BasicFareYen discountBasicFareYen(BasicFareYen basicFareYen);
+    BasicFareYen calculateBasicFareYen(BasicFareYen basicFareYen);
 
-    SuperExpressSurchargeYen discountSuperExpressSurchargeYen(SuperExpressSurchargeYen superExpressSurchargeYen);
+    SuperExpressSurchargeYen calculateSuperExpressSurchargeYen(SuperExpressSurchargeYen superExpressSurchargeYen);
 
-    BasicFareYen discountBasicFareYenForOneTime(BasicFareYen basicFareYen);
+    BasicFareYen calculateBasicFareYenForOneTime(BasicFareYen basicFareYen);
 
-    SuperExpressSurchargeYen discountSuperExpressSurchargeYenForOneTime(SuperExpressSurchargeYen superExpressSurchargeYen);
+    SuperExpressSurchargeYen calculateSuperExpressSurchargeYenForOneTime(SuperExpressSurchargeYen superExpressSurchargeYen);
 }
