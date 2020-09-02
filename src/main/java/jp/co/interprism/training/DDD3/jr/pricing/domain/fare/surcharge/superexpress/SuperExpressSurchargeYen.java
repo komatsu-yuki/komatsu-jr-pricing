@@ -31,4 +31,9 @@ public class SuperExpressSurchargeYen implements FareUnit<SuperExpressSurchargeY
     public SuperExpressSurchargeYen times(FareCount fareCount) {
         return new SuperExpressSurchargeYen(fareYen.times(fareCount));
     }
+
+    @Override
+    public String toString() {
+        return "特急料金=" + fareYen;
+    }
 }

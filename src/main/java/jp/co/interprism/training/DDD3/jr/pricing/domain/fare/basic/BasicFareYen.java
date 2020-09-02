@@ -31,4 +31,9 @@ public class BasicFareYen implements FareUnit<BasicFareYen> {
     public BasicFareYen times(FareCount fareCount) {
         return new BasicFareYen(fareYen.times(fareCount));
     }
+
+    @Override
+    public String toString() {
+        return "運賃=" + fareYen;
+    }
 }
