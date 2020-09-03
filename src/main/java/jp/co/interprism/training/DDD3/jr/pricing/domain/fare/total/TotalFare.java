@@ -12,7 +12,6 @@ public interface TotalFare {
     default FareYen sumFareYen() {
         BasicFareYen basicFareYen = getBasicFareYen();
         SuperExpressSurchargeYen superExpressSurchargeYen = getSuperExpressSurchargeYen();
-        System.out.println("運賃=" + basicFareYen.getFareYen().getValue() + ", 特急料金=" + superExpressSurchargeYen.getFareYen().getValue());
         return basicFareYen.getFareYen().plus(superExpressSurchargeYen.getFareYen());
     }
 }

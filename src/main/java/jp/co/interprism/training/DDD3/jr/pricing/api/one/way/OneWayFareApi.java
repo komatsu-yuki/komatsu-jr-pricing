@@ -12,15 +12,16 @@ import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpr
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.seat.Seat;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit.FareYen;
 import jp.co.interprism.training.DDD3.jr.pricing.service.fare.ordinary.OneWayFareService;
-import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@AllArgsConstructor
 public class OneWayFareApi {
+
+    @RequestMapping(value = "/jr-pricing")
     public Map invoke(OneWayFareRequest request) {
         Station startStation = request.getStartStationForm().parse();
         Station endStation = request.getEndStationForm().parse();
