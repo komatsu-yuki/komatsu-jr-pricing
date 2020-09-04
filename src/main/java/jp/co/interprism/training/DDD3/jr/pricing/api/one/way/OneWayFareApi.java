@@ -6,7 +6,7 @@ import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.date.BoardingDa
 import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.section.BoardingSection;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.section.Station;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.basic.BasicFareFactory;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.child.Age;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.child.Age;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.SuperExpressName;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.SuperExpressSurchargeFactory;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.seat.Seat;

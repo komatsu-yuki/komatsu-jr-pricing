@@ -1,12 +1,12 @@
-package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.discount.group;
+package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group;
 
 import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.date.BoardingDate;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.basic.BasicFareYen;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.child.ChildFare;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.discount.Discount;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.discount.group.member.AdultsCount;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.discount.group.member.ChildrenCount;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.discount.group.member.MembersCount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.child.ChildFare;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.Discount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group.member.AdultsCount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group.member.ChildrenCount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group.member.MembersCount;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.SuperExpressSurchargeYen;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.OrdinaryFare;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit.FareCount;
