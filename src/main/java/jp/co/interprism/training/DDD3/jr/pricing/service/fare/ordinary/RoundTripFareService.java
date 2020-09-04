@@ -4,10 +4,10 @@ import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.date.BoardingDa
 import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.section.BoardingSection;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.section.OperatingKilometer;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.basic.BasicFareFactory;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.child.Age;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.child.ChildFare;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.discount.DiscountedFare;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.discount.round.trip.RoundTripDiscount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.child.Age;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.child.ChildFare;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.DiscountedFare;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.round.trip.RoundTripDiscount;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.SuperExpressName;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.SuperExpressSurchargeFactory;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.seat.Seat;

@@ -1,4 +1,4 @@
-package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.discount;
+package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount;
 
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.basic.BasicFareYen;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.SuperExpressSurchargeYen;
