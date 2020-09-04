@@ -16,11 +16,6 @@ package ordinaryFare {
         class FareYen implements FareUnit
     }
 
-    package total {
-        interface TotalFare
-        class OrdinaryFare implements TotalFare
-    }
-
     package basic {
         class BasicFare
         class BasicFareYen implements FareUnit
@@ -30,24 +25,27 @@ package ordinaryFare {
         class SuperExpressSurchargeYen implements FareUnit
     }
 
-    package child {
-        class ChildFare implements TotalFare
-    }
+    package total {
+        interface TotalFare
+        class OrdinaryFare implements TotalFare
 
-    package discount {
-        class DiscountedFare implements TotalFare
-        interface Discount
+        package child {
+            class ChildFare implements TotalFare
+        }
+
+        package discount {
+            class DiscountedFare implements TotalFare
+            interface Discount
+        }
     }
 }
 
 
-basic <|--- total
-surchage.superexpress <|--- total
-
+BasicFareYen <|--- total
+SuperExpressSurchargeYen <|--- total
+OrdinaryFare -o ChildFare
 DiscountedFare o- Discount
 
-total -[hidden]-- child
-total -[hidden]-- discount
 
 
 
