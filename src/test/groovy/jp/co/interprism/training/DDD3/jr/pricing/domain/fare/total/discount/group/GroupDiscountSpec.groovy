@@ -27,6 +27,5 @@ class GroupDiscountSpec extends Specification {
         団体人数 || result
         7    || false
         8    || true
-        9    || true
     }
 }
