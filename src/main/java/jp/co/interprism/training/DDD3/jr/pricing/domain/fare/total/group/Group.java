@@ -1,8 +1,8 @@
-package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group;
+package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group;
 
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group.member.AdultsCount;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group.member.ChildrenCount;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group.member.MembersCount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.AdultsCount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.ChildrenCount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.MembersCount;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group.member;
+package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member;
 
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit.FareCount;
 import lombok.AllArgsConstructor;

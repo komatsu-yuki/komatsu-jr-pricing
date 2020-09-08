@@ -1,7 +1,7 @@
 package jp.co.interprism.training.DDD3.jr.pricing.api.form;
 
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group.member.ChildrenCount;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group.member.MembersCount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.ChildrenCount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.MembersCount;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit.FareCount;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
