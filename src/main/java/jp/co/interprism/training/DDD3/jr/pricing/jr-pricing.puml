@@ -10,7 +10,7 @@ package boarding {
     }
 }
 
-package ordinaryFare {
+package oneWayFare {
     package unit {
         interface FareUnit
         class FareYen implements FareUnit
@@ -27,24 +27,37 @@ package ordinaryFare {
 
     package total {
         interface TotalFare
-        class OrdinaryFare implements TotalFare
 
-        package child {
-            class ChildFare implements TotalFare
+        interface Discount
+
+        package ordinary {
+
+            package one.way {
+                class OneWayFare implements TotalFare
+
+                package child {
+                    class ChildFare implements TotalFare
+                }
+            }
+            package round.trip {
+                class RoundTripFare implements TotalFare
+                class RoundTripDiscount implements Discount
+            }
+
         }
 
-        package discount {
-            class DiscountedFare implements TotalFare
-            interface Discount
+        package Group {
+            class GroupFare implements TotalFare
+            class GroupDiscount implements Discount
         }
+
     }
 }
 
 
 BasicFareYen <|--- total
 SuperExpressSurchargeYen <|--- total
-OrdinaryFare -o ChildFare
-DiscountedFare o- Discount
+
 
 
 
@@ -76,19 +89,14 @@ interface TotalFare {
     + getSuperExpressSurchargeYen()
 }
 
-class OrdinaryFare {
+class OneWayFare {
     - basicFareYen
     - superExpressSurchargeYen
 }
 
 
 class ChildFare {
-    - ordinaryFare
-}
-
-class DiscountedFare {
-    - totalFare
-    - discount
+    - oneWayFare
 }
 
 interface Discount {

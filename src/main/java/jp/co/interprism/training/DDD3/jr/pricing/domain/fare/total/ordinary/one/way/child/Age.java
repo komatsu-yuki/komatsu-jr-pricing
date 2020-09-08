@@ -1,4 +1,4 @@
-package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.child;
+package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.child;
 
 public enum Age {
     ADULT,

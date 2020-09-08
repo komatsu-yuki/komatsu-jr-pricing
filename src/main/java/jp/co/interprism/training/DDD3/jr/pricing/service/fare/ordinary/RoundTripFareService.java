@@ -4,16 +4,16 @@ import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.date.BoardingDa
 import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.section.BoardingSection;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.section.OperatingKilometer;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.basic.BasicFareFactory;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.child.Age;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.child.ChildFare;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.DiscountedFare;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.round.trip.RoundTripDiscount;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.SuperExpressName;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.SuperExpressSurchargeFactory;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.seat.Seat;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.OrdinaryFare;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.OrdinaryFareFactory;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.TotalFare;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.OneWayFare;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.OneWayFareFactory;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.child.Age;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.child.ChildFare;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.round.trip.RoundTripDiscount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.round.trip.RoundTripFare;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit.FareYen;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,11 +32,11 @@ public class RoundTripFareService {
         OperatingKilometer sectionOperatingKilometer = boardingSection.calculateOperatingKilometer();
         RoundTripDiscount roundTripDiscount = new RoundTripDiscount(sectionOperatingKilometer);
 
-        OrdinaryFareFactory ordinaryFareFactory = new OrdinaryFareFactory(basicFareFactory, superExpressSurchargeFactory);
-        OrdinaryFare ordinaryFare = ordinaryFareFactory.create(boardingSection, boardingDate, seat, superExpressName);
+        OneWayFareFactory oneWayFareFactory = new OneWayFareFactory(basicFareFactory, superExpressSurchargeFactory);
+        OneWayFare ordinaryFare = oneWayFareFactory.create(boardingSection, boardingDate, seat, superExpressName);
         TotalFare oneWayFare = age.isChild() ? new ChildFare(ordinaryFare) : ordinaryFare;
 
-        DiscountedFare roundTripFare = new DiscountedFare(oneWayFare, roundTripDiscount);
+        RoundTripFare roundTripFare = new RoundTripFare(oneWayFare, roundTripDiscount);
         return roundTripFare.sumFareYen();
     }
 }

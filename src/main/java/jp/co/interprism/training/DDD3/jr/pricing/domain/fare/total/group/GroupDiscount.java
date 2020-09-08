@@ -1,17 +1,14 @@
-package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group;
+package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group;
 
 import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.date.BoardingDate;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.basic.BasicFareYen;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.child.ChildFare;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.Discount;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group.member.AdultsCount;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group.member.ChildrenCount;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group.member.MembersCount;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.SuperExpressSurchargeYen;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.OrdinaryFare;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.Discount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.AdultsCount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.ChildrenCount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.MembersCount;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit.FareCount;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit.FareRate;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit.FareYen;
 import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
@@ -41,32 +38,6 @@ public class GroupDiscount implements Discount {
         return false;
     }
 
-    private BasicFareYen sumBasicFareYenForGroup(BasicFareYen basicFareYen, Group group) {// TODO: 2020/08/31 要リファクタ
-        MembersCount adultMembersCount = group.getAdultsCount().getMembersCount();
-        MembersCount childMembersCount = group.getChildrenCount().getMembersCount();
-
-        ChildFare childFare = new ChildFare(new OrdinaryFare(basicFareYen, new SuperExpressSurchargeYen(FareYen.ZERO)));//TODO 要リファクタ
-        BasicFareYen childYen = childFare.getBasicFareYen();
-
-        BasicFareYen sumAdultsYen = basicFareYen.times(adultMembersCount.getFareCount());
-        BasicFareYen sumChildrenYen = childYen.times(childMembersCount.getFareCount());
-
-        return sumAdultsYen.plus(sumChildrenYen);
-    }
-
-    private SuperExpressSurchargeYen sumSuperExpressSurchargeYenForGroup(SuperExpressSurchargeYen superExpressSurchargeYen, Group group) {
-        MembersCount adultMembersCount = group.getAdultsCount().getMembersCount();
-        MembersCount childMembersCount = group.getChildrenCount().getMembersCount();
-
-        ChildFare childFare = new ChildFare(new OrdinaryFare(new BasicFareYen(FareYen.ZERO), superExpressSurchargeYen));//TODO 要リファクタ
-        SuperExpressSurchargeYen childYen = childFare.getSuperExpressSurchargeYen();
-
-        SuperExpressSurchargeYen sumAdultsYen = childYen.times(adultMembersCount.getFareCount());
-        SuperExpressSurchargeYen sumChildrenYen = childYen.times(childMembersCount.getFareCount());
-
-        return sumAdultsYen.plus(sumChildrenYen);
-    }
-
     private MembersCount getFreeMembersCount() {//TODO リファクタ考慮
         MembersCount groupMembersCount = group.sumMembersCount();
         if (groupMembersCount.compareTo(NO_CHARGE_BOUND_FOR_ONE) < 0) return MembersCount.ZERO;
@@ -82,7 +53,7 @@ public class GroupDiscount implements Discount {
         return new MembersCount(new FareCount(freeCount));
     }
 
-    private Group getGroupForPayment() {
+    public Group getGroupForPayment() {
         MembersCount adultMembersCount = group.getAdultsCount().getMembersCount();
         MembersCount childMembersCount = group.getChildrenCount().getMembersCount();
         MembersCount freeMembersCount = getFreeMembersCount();
@@ -105,26 +76,12 @@ public class GroupDiscount implements Discount {
 
     @Override
     public BasicFareYen calculateBasicFareYen(BasicFareYen basicFareYen) {
-        Group groupForPayment = getGroupForPayment();
-        BasicFareYen discountedYen = calculateBasicFareYenForOneTime(basicFareYen);
-        return sumBasicFareYenForGroup(discountedYen, groupForPayment);
-    }
-
-    @Override
-    public SuperExpressSurchargeYen calculateSuperExpressSurchargeYen(SuperExpressSurchargeYen superExpressSurchargeYen) {
-        Group groupForPayment = getGroupForPayment();
-        SuperExpressSurchargeYen discountedYen = calculateSuperExpressSurchargeYenForOneTime(superExpressSurchargeYen);
-        return sumSuperExpressSurchargeYenForGroup(discountedYen, groupForPayment);
-    }
-
-    @Override
-    public BasicFareYen calculateBasicFareYenForOneTime(BasicFareYen basicFareYen) {
         if (inGroupPeak()) return basicFareYen.times(DISCOUNT_RATE_IN_GROUP_PEAK);
         return basicFareYen.times(DISCOUNT_RATE_IN_GROUP_REGULAR);
     }
 
     @Override
-    public SuperExpressSurchargeYen calculateSuperExpressSurchargeYenForOneTime(SuperExpressSurchargeYen superExpressSurchargeYen) {
+    public SuperExpressSurchargeYen calculateSuperExpressSurchargeYen(SuperExpressSurchargeYen superExpressSurchargeYen) {
         return superExpressSurchargeYen;
     }
 }
