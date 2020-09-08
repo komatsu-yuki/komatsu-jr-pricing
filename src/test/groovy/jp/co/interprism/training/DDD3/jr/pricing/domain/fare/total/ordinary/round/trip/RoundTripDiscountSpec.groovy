@@ -1,6 +1,7 @@
-package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.round.trip
+package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.round.trip
 
 import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.section.OperatingKilometer
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.round.trip.RoundTripDiscount
 import spock.lang.Specification
 import spock.lang.Unroll
 
