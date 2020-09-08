@@ -1,10 +1,12 @@
 package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group
 
 import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.date.BoardingDate
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.basic.BasicFareYen
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.AdultsCount
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.ChildrenCount
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.MembersCount
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit.FareCount
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit.FareYen
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -107,5 +109,25 @@ class GroupDiscountSpec extends Specification {
         2      | 200      | 202   || 2          | 3            | 5
     }
 
-    def "正常系: 割引後の一人分の運賃"()
+    def "正常系: #month月#date日の一人分運賃10000円の割引後運賃が#result円"() {
+        setup:
+        def boardingDate = new BoardingDate(LocalDate.of(2020, month, date))
+        def adultsCount = new AdultsCount(new MembersCount(new FareCount(6)))
+        def childrenCount = new ChildrenCount(new MembersCount(new FareCount(2)))
+        def group = new Group(adultsCount, childrenCount)
+
+        when:
+        def discount = new GroupDiscount(group, boardingDate)
+        def basicFareYen = new BasicFareYen(new FareYen(10000))
+
+        then:
+        assert discount.calculateBasicFareYen(basicFareYen).fareYen.value == result
+
+        where:
+        month | date || result
+        12    | 20   || 8500
+        12    | 21   || 9000
+        1     | 10   || 9000
+        1     | 11   || 8500
+    }
 }
