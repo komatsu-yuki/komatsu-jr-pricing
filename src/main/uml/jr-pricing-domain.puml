@@ -55,9 +55,11 @@ package fare {
                 package child {
                     enum Age
                     class ChildFare implements TotalFare
+                    class ChildDiscount implements Discount
                 }
             }
             package round.trip {
+                class RoundTripFare implements TotalFare
                 class RoundTripDiscount implements Discount
             }
         }
@@ -106,6 +108,10 @@ SuperExpressSurchargeYen <|--- total
 BasicFare <- BasicFareFactory
 SuperExpressSurcharge <- SuperExpressSurchargeFactory
 SuperExpressSurchargeReservedSeat o-- AdditionalCharge
+
+ChildFare o-- ChildDiscount
+RoundTripFare o-- RoundTripDiscount
+GroupFare o-- GroupDiscount
 
 
 
