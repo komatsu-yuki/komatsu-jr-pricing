@@ -28,11 +28,11 @@ public class GroupDiscount implements Discount {
         LocalDate localDate = boardingDate.getLocalDate();
         int year = localDate.getYear();
         if (localDate.getMonthValue() == 12) {
-            LocalDate peakStartDate = LocalDate.of(year, 12, 21);
+            LocalDate peakStartDate = LocalDate.of(year, 12, 20);
             return localDate.isAfter(peakStartDate);
         }
         if (localDate.getMonthValue() == 1) {
-            LocalDate peakEndDate = LocalDate.of(year, 1, 10);
+            LocalDate peakEndDate = LocalDate.of(year, 1, 11);
             return localDate.isBefore(peakEndDate);
         }
         return false;
