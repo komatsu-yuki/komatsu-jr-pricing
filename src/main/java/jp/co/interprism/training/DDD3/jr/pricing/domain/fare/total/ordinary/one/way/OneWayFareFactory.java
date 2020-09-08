@@ -1,4 +1,4 @@
-package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total;
+package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way;
 
 import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.date.BoardingDate;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.section.BoardingSection;
@@ -11,17 +11,17 @@ import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpr
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class OrdinaryFareFactory {
+public class OneWayFareFactory {
     private final BasicFareFactory basicFareFactory;
     private final SuperExpressSurchargeFactory superExpressSurchargeFactory;
 
-    public OrdinaryFare create(BoardingSection boardingSection,
-                            BoardingDate boardingDate,
-                            Seat seat,
-                            SuperExpressName superExpressName) {
+    public OneWayFare create(BoardingSection boardingSection,
+                             BoardingDate boardingDate,
+                             Seat seat,
+                             SuperExpressName superExpressName) {
         BasicFare basicFare = basicFareFactory.create(boardingSection);
         SuperExpressSurcharge superExpressSurcharge = superExpressSurchargeFactory.create(boardingSection, boardingDate, seat, superExpressName);
 
-        return new OrdinaryFare(basicFare.getBasicFareYen(), superExpressSurcharge.calculateSuperExpressSurchargeYen());
+        return new OneWayFare(basicFare.getBasicFareYen(), superExpressSurcharge.calculateSuperExpressSurchargeYen());
     }
 }

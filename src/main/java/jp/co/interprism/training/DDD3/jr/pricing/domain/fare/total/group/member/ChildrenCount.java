@@ -1,10 +1,10 @@
-package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.discount.group.member;
+package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class AdultsCount {
+public class ChildrenCount {
     private final MembersCount membersCount;
 }

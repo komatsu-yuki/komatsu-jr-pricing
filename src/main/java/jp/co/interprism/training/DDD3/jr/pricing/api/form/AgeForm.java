@@ -1,6 +1,6 @@
 package jp.co.interprism.training.DDD3.jr.pricing.api.form;
 
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.child.Age;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.child.Age;
 
 public enum AgeForm {
     おとな,

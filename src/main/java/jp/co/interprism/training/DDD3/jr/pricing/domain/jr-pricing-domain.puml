@@ -43,32 +43,38 @@ package fare {
 
     package total {
         interface TotalFare
-        class OrdinaryFare implements TotalFare
-        class OrdinaryFareFactory
 
-        package child {
-            enum Age
-            class ChildFare implements TotalFare
-        }
 
-        package discount {
-            interface Discount
-            class DiscountedFare implements TotalFare
+        interface Discount
 
+        package ordinary {
+
+            package one.way {
+                class OneWayFare implements TotalFare
+                class OneWayFareFactory
+                package child {
+                    enum Age
+                    class ChildFare implements TotalFare
+                }
+            }
             package round.trip {
                 class RoundTripDiscount implements Discount
             }
-            package group {
-                class GroupDiscount implements Discount
+        }
 
-                class Group
-                package member {
-                    class MembersCount
-                    class AdultsCount
-                    class ChildrenCount
-                }
+        package group {
+            class GroupFare implements TotalFare
+            class GroupDiscount implements Discount
+            class Group
+            package member {
+                class MembersCount
+                class AdultsCount
+                class ChildrenCount
             }
         }
+
+
+
     }
 
 
@@ -96,13 +102,11 @@ SuperExpressSurchargeYen --o SuperExpressSurcharge
 BasicFareYen <|--- total
 SuperExpressSurchargeYen <|--- total
 
-OrdinaryFareFactory -> OrdinaryFare
+
 BasicFare <- BasicFareFactory
 SuperExpressSurcharge <- SuperExpressSurchargeFactory
 SuperExpressSurchargeReservedSeat o-- AdditionalCharge
 
-DiscountedFare o- Discount
-OrdinaryFare --o ChildFare
 
 
 /'レイアウト'/
@@ -180,18 +184,18 @@ interface TotalFare {
     + {default} sumFareYen()
 }
 
-class OrdinaryFare {
+class OneWayFare {
     - basicFareYen
     - superExpressSurchargeYen
 }
 
-class OrdinaryFareFactory {
+class OneWayFareFactory {
     - basicFareFactory
     - superExpressSurchargeFactory
 }
 
 class ChildFare {
-    - ordinaryFare
+    - oneWayFare
 }
 
 
@@ -207,13 +211,6 @@ interface Discount {
     + isAvailable()
     + discountBasicFareYen()
     + discountSuperExpressSurchargeYen()
-    + discountBasicFareYenForOneTime()
-    + discountSuperExpressSurchargeYenForOneTime()
-}
-
-class DiscountedFare {
-    - totalFare
-    - discount
 }
 
 
