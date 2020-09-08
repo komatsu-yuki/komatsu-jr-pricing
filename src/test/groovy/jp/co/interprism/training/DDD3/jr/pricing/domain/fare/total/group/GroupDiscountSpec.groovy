@@ -112,8 +112,8 @@ class GroupDiscountSpec extends Specification {
     def "正常系: #month月#date日の一人分運賃10000円の割引後運賃が#result円"() {
         setup:
         def boardingDate = new BoardingDate(LocalDate.of(2020, month, date))
-        def adultsCount = new AdultsCount(new MembersCount(new FareCount(6)))
-        def childrenCount = new ChildrenCount(new MembersCount(new FareCount(2)))
+        def adultsCount = new AdultsCount(new MembersCount(new FareCount(8)))
+        def childrenCount = new ChildrenCount(new MembersCount(new FareCount(0)))
         def group = new Group(adultsCount, childrenCount)
 
         when:
