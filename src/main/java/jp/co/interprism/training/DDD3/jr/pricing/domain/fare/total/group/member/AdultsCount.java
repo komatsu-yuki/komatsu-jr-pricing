@@ -7,4 +7,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public class AdultsCount {
     private final MembersCount membersCount;
+
+    public AdultsCount plus(AdultsCount that) {
+        return new AdultsCount(this.membersCount.plus(that.membersCount));
+    }
+
+    public AdultsCount minus(AdultsCount that) {
+        return new AdultsCount(this.membersCount.minus(that.membersCount));
+    }
 }

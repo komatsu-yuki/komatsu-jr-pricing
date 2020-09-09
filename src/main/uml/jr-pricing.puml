@@ -37,6 +37,7 @@ package oneWayFare {
 
                 package child {
                     class ChildFare implements TotalFare
+                    class ChildDiscount implements Discount
                 }
             }
             package round.trip {
@@ -59,13 +60,13 @@ BasicFareYen <|--- total
 SuperExpressSurchargeYen <|--- total
 
 
-TotalFare -[hidden]- Discount
 
 Discount -[hidden]-- ordinary
 Discount -[hidden]-- group
 
 RoundTripFare o-- RoundTripDiscount
 GroupFare o-- GroupDiscount
+ChildFare o-- ChildDiscount
 
 
 
