@@ -3,10 +3,9 @@ package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.basic.BasicFareYen;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.SuperExpressSurchargeYen;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.TotalFare;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.MembersCount;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.OneWayFare;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.child.ChildFare;
-import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit.FareYen;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.AdultsCount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.ChildrenCount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.child.ChildDiscount;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -17,18 +16,23 @@ public class GroupFare implements TotalFare {
     @Override
     public BasicFareYen getBasicFareYen() {
         if (!discount.isAvailable()) throw new IllegalArgumentException("割引が適用できません");
+        //割引前の一人分運賃
+        BasicFareYen adultYen = totalFare.getBasicFareYen();
+        ChildDiscount childDiscount = new ChildDiscount();
+        BasicFareYen childYen = childDiscount.calculateBasicFareYen(adultYen);
 
-        BasicFareYen OnePersonYen = totalFare.getBasicFareYen();
-        Group groupForPayment = discount.getGroupForPayment();
+        //割引後の一人分運賃
+        BasicFareYen discountedAdultYen = discount.calculateBasicFareYen(adultYen);
+        BasicFareYen discountedChildYen = discount.calculateBasicFareYen(childYen);
 
-        MembersCount adultMembersCount = groupForPayment.getAdultsCount().getMembersCount();
-        MembersCount childMembersCount = groupForPayment.getChildrenCount().getMembersCount();
+        //無料分を除いた人数
+        GroupDiscountFreeDomainService freeDomainService = new GroupDiscountFreeDomainService(discount);
+        AdultsCount paymentAdultsCount = freeDomainService.calculatePaymentAdultsCount();
+        ChildrenCount paymentChildrenCount = freeDomainService.calculatePaymentChildrenCount();
 
-        ChildFare childFare = new ChildFare(new OneWayFare(OnePersonYen, new SuperExpressSurchargeYen(FareYen.ZERO)));//TODO 要リファクタ
-        BasicFareYen childYen = childFare.getBasicFareYen();
-
-        BasicFareYen sumAdultsYen = OnePersonYen.times(adultMembersCount.getFareCount());
-        BasicFareYen sumChildrenYen = childYen.times(childMembersCount.getFareCount());
+        //合計運賃
+        BasicFareYen sumAdultsYen = discountedAdultYen.times(paymentAdultsCount.getMembersCount().getFareCount());
+        BasicFareYen sumChildrenYen = discountedChildYen.times(paymentChildrenCount.getMembersCount().getFareCount());
 
         return sumAdultsYen.plus(sumChildrenYen);
     }
@@ -36,17 +40,23 @@ public class GroupFare implements TotalFare {
     @Override
     public SuperExpressSurchargeYen getSuperExpressSurchargeYen() {
         if (!discount.isAvailable()) throw new IllegalArgumentException("割引が適用できません");
-        SuperExpressSurchargeYen onePersonYen = totalFare.getSuperExpressSurchargeYen();
-        Group groupForPayment = discount.getGroupForPayment();
+        //割引前の一人分特急料金
+        SuperExpressSurchargeYen adultYen = totalFare.getSuperExpressSurchargeYen();
+        ChildDiscount childDiscount = new ChildDiscount();
+        SuperExpressSurchargeYen childYen = childDiscount.calculateSuperExpressSurchargeYen(adultYen);
 
-        MembersCount adultMembersCount = groupForPayment.getAdultsCount().getMembersCount();
-        MembersCount childMembersCount = groupForPayment.getChildrenCount().getMembersCount();
+        //割引後の一人分特急料金
+        SuperExpressSurchargeYen discountedAdultYen = discount.calculateSuperExpressSurchargeYen(adultYen);
+        SuperExpressSurchargeYen discountedChildYen = discount.calculateSuperExpressSurchargeYen(childYen);
 
-        ChildFare childFare = new ChildFare(new OneWayFare(new BasicFareYen(FareYen.ZERO), onePersonYen));//TODO 要リファクタ
-        SuperExpressSurchargeYen childYen = childFare.getSuperExpressSurchargeYen();
+        //無料分を除いた人数
+        GroupDiscountFreeDomainService freeDomainService = new GroupDiscountFreeDomainService(discount);
+        AdultsCount paymentAdultsCount = freeDomainService.calculatePaymentAdultsCount();
+        ChildrenCount paymentChildrenCount = freeDomainService.calculatePaymentChildrenCount();
 
-        SuperExpressSurchargeYen sumAdultsYen = childYen.times(adultMembersCount.getFareCount());
-        SuperExpressSurchargeYen sumChildrenYen = childYen.times(childMembersCount.getFareCount());
+        //合計特急料金
+        SuperExpressSurchargeYen sumAdultsYen = discountedAdultYen.times(paymentAdultsCount.getMembersCount().getFareCount());
+        SuperExpressSurchargeYen sumChildrenYen = discountedChildYen.times(paymentChildrenCount.getMembersCount().getFareCount());
 
         return sumAdultsYen.plus(sumChildrenYen);
     }
