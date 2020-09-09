@@ -5,6 +5,7 @@ import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.section.Boardin
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.basic.BasicFareFactory;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.OneWayFare;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.child.Age;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.child.ChildDiscount;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.child.ChildFare;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.SuperExpressName;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.SuperExpressSurchargeFactory;
@@ -27,8 +28,8 @@ public class OneWayFareService {
                              SuperExpressName superExpressName,
                              Age age) {
         OneWayFareFactory oneWayFareFactory = new OneWayFareFactory(basicFareFactory, superExpressSurchargeFactory);
-        OneWayFare oneWayFare = oneWayFareFactory.create(boardingSection, boardingDate, seat, superExpressName);
-        TotalFare totalFare = age.isChild() ? new ChildFare(oneWayFare) : oneWayFare;
+        OneWayFare adultFare = oneWayFareFactory.create(boardingSection, boardingDate, seat, superExpressName);
+        TotalFare totalFare = age.isChild() ? new ChildFare(adultFare, new ChildDiscount()) : adultFare;
         return totalFare.sumFareYen();
     }
 }

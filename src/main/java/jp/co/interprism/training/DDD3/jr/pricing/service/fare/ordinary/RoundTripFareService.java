@@ -11,6 +11,7 @@ import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.TotalFare;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.OneWayFare;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.OneWayFareFactory;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.child.Age;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.child.ChildDiscount;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.one.way.child.ChildFare;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.round.trip.RoundTripDiscount;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.ordinary.round.trip.RoundTripFare;
@@ -33,8 +34,8 @@ public class RoundTripFareService {
         RoundTripDiscount roundTripDiscount = new RoundTripDiscount(sectionOperatingKilometer);
 
         OneWayFareFactory oneWayFareFactory = new OneWayFareFactory(basicFareFactory, superExpressSurchargeFactory);
-        OneWayFare ordinaryFare = oneWayFareFactory.create(boardingSection, boardingDate, seat, superExpressName);
-        TotalFare oneWayFare = age.isChild() ? new ChildFare(ordinaryFare) : ordinaryFare;
+        OneWayFare adultFare = oneWayFareFactory.create(boardingSection, boardingDate, seat, superExpressName);
+        TotalFare oneWayFare = age.isChild() ? new ChildFare(adultFare, new ChildDiscount()) : adultFare;
 
         RoundTripFare roundTripFare = new RoundTripFare(oneWayFare, roundTripDiscount);
         return roundTripFare.sumFareYen();
