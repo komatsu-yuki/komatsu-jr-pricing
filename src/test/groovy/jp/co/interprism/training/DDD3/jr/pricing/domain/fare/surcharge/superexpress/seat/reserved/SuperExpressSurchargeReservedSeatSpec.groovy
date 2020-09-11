@@ -9,23 +9,29 @@ import spock.lang.Unroll
 
 @Unroll
 class SuperExpressSurchargeReservedSeatSpec extends Specification {
-    def "列車種が#列車種, シーズンが#シーズンのとき 指定席の特急料金は#result円"() {
+    def "列車種が#trainType, シーズンが#seasonTypeのとき 指定席の特急料金は#result円"() {
         given:
         def superExpressSurchargeYen = new SuperExpressSurchargeYen(new FareYen(5490))
         def additionalCharge = new AdditionalCharge(new FareYen(320))
-        def superExpressName = SuperExpressName.valueOf(列車種)
-        def season = Season.valueOf(シーズン)
+        def superExpressName = SuperExpressName.valueOf(trainType)
+        def season = Season.valueOf(seasonType)
 
         when:
-        def superExpressSurcharge = new SuperExpressSurchargeReservedSeat(superExpressSurchargeYen, additionalCharge, superExpressName, season)
+        def superExpressSurcharge = new SuperExpressSurchargeReservedSeat(superExpressSurchargeYen,
+                additionalCharge,
+                superExpressName,
+                season)
 
         then:
         assert superExpressSurcharge.calculateSuperExpressSurchargeYen().fareYen.value == result
 
         where:
-        列車種   | シーズン       || result
-        "ひかり" | "PEAK"     || 5690
-        "ひかり" | "OFF_PEAK" || 5290
-        "のぞみ" | "REGULAR"  || 5810
+        trainType | seasonType || result
+        "ひかり"     | "REGULAR"  || 5490
+        "ひかり"     | "PEAK"     || 5690
+        "ひかり"     | "OFF_PEAK" || 5290
+        "のぞみ"     | "REGULAR"  || 5810
+        "のぞみ"     | "PEAK"     || 6010
+        "のぞみ"     | "OFF_PEAK" || 5610
     }
 }
