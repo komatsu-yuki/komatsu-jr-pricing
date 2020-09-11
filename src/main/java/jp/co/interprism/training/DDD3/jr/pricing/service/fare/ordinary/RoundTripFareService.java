@@ -31,13 +31,13 @@ public class RoundTripFareService {
                              SuperExpressName superExpressName,
                              Age age) {
         OperatingKilometer sectionOperatingKilometer = boardingSection.calculateOperatingKilometer();
-        RoundTripDiscount roundTripDiscount = new RoundTripDiscount(sectionOperatingKilometer);
+        RoundTripDiscount discount = new RoundTripDiscount(sectionOperatingKilometer);
 
         OneWayFareFactory oneWayFareFactory = new OneWayFareFactory(basicFareFactory, superExpressSurchargeFactory);
         OneWayFare adultFare = oneWayFareFactory.create(boardingSection, boardingDate, seat, superExpressName);
         TotalFare oneWayFare = age.isChild() ? new ChildFare(adultFare, new ChildDiscount()) : adultFare;
 
-        RoundTripFare roundTripFare = new RoundTripFare(oneWayFare, roundTripDiscount);
+        RoundTripFare roundTripFare = new RoundTripFare(oneWayFare, discount);
         return roundTripFare.sumFareYen();
     }
 }
