@@ -31,8 +31,8 @@ public class GroupFare implements TotalFare {
         ChildrenCount paymentChildrenCount = freeDomainService.calculatePaymentChildrenCount();
 
         //合計運賃
-        BasicFareYen sumAdultsYen = discountedAdultYen.times(paymentAdultsCount.getMembersCount().getFareCount());
-        BasicFareYen sumChildrenYen = discountedChildYen.times(paymentChildrenCount.getMembersCount().getFareCount());
+        BasicFareYen sumAdultsYen = discountedAdultYen.times(paymentAdultsCount.getFareCount());
+        BasicFareYen sumChildrenYen = discountedChildYen.times(paymentChildrenCount.getFareCount());
 
         return sumAdultsYen.plus(sumChildrenYen);
     }
@@ -55,8 +55,8 @@ public class GroupFare implements TotalFare {
         ChildrenCount paymentChildrenCount = freeDomainService.calculatePaymentChildrenCount();
 
         //合計特急料金
-        SuperExpressSurchargeYen sumAdultsYen = discountedAdultYen.times(paymentAdultsCount.getMembersCount().getFareCount());
-        SuperExpressSurchargeYen sumChildrenYen = discountedChildYen.times(paymentChildrenCount.getMembersCount().getFareCount());
+        SuperExpressSurchargeYen sumAdultsYen = discountedAdultYen.times(paymentAdultsCount.getFareCount());
+        SuperExpressSurchargeYen sumChildrenYen = discountedChildYen.times(paymentChildrenCount.getFareCount());
 
         return sumAdultsYen.plus(sumChildrenYen);
     }

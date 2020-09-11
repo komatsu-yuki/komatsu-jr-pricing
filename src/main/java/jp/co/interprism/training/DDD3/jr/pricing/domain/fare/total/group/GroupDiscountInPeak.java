@@ -8,10 +8,12 @@ import lombok.AllArgsConstructor;
 import java.time.LocalDate;
 
 @AllArgsConstructor
-public class GroupDiscountInPeakDomainService {
+public class GroupDiscountInPeak {
     private static final FareRate DISCOUNT_RATE_IN_PEAK = new FareRate(0.9);//10%引き
 
-    public boolean inPeak(BoardingDate boardingDate) {
+    private final BoardingDate boardingDate;
+
+    public boolean inPeak() {
         LocalDate localDate = boardingDate.getLocalDate();
         int year = localDate.getYear();
         if (localDate.getMonthValue() == 12) {
