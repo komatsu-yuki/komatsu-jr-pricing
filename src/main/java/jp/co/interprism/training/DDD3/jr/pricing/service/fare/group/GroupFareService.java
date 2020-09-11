@@ -8,6 +8,7 @@ import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpr
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.seat.Seat;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.Group;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.GroupDiscount;
+import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.GroupDiscountInPeak;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.GroupFare;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.AdultsCount;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.ChildrenCount;
@@ -30,12 +31,13 @@ public class GroupFareService {
                              AdultsCount adultsCount,
                              ChildrenCount childrenCount) {
         Group group = new Group(adultsCount, childrenCount);
-        GroupDiscount groupDiscount = new GroupDiscount(group, boardingDate);
+        GroupDiscountInPeak discountInPeak = new GroupDiscountInPeak(boardingDate);
+        GroupDiscount discount = new GroupDiscount(group, discountInPeak);
 
         OneWayFareFactory oneWayFareFactory = new OneWayFareFactory(basicFareFactory, superExpressSurchargeFactory);
         OneWayFare oneWayFare = oneWayFareFactory.create(boardingSection, boardingDate, seat, superExpressName);
 
-        GroupFare groupFare = new GroupFare(oneWayFare, groupDiscount);
+        GroupFare groupFare = new GroupFare(oneWayFare, discount);
         return groupFare.sumFareYen();
     }
 }
