@@ -13,6 +13,7 @@ import java.time.LocalDate
 class GroupDiscountFreeSpec extends Specification {
     @Shared
     def boardingDate = new BoardingDate(LocalDate.of(2020, 9, 3))
+    def discountInPeak = new GroupDiscountInPeak(boardingDate)
 
     def "正常系: 合計#total人の団体は#freeTotal人無料になる"() {
         setup:
@@ -21,7 +22,7 @@ class GroupDiscountFreeSpec extends Specification {
         def group = new Group(adultsCount, childrenCount)
 
         when:
-        def discount = new GroupDiscount(group, boardingDate)
+        def discount = new GroupDiscount(group, discountInPeak)
         def freeDomainService = new GroupDiscountFreeDomainService(discount)
 
         then:
@@ -47,7 +48,7 @@ class GroupDiscountFreeSpec extends Specification {
         def group = new Group(adultsCount, childrenCount)
 
         when:
-        def discount = new GroupDiscount(group, boardingDate)
+        def discount = new GroupDiscount(group, discountInPeak)
         def freeDomainService = new GroupDiscountFreeDomainService(discount)
 
         then:

@@ -17,6 +17,7 @@ import java.time.LocalDate
 class GroupDiscountSpec extends Specification {
     @Shared
     def boardingDate = new BoardingDate(LocalDate.of(2020, 9, 3))
+    def discountInPeak = new GroupDiscountInPeak(boardingDate)
 
     def "正常系: 団体人数#totalのときに利用可能かどうか"() {
         setup:
@@ -25,7 +26,7 @@ class GroupDiscountSpec extends Specification {
         def group = new Group(adultsCount, childrenCount)
 
         when:
-        def groupDiscount = new GroupDiscount(group, boardingDate)
+        def groupDiscount = new GroupDiscount(group, discountInPeak)
 
         then:
         assert total == adults + children
@@ -44,7 +45,7 @@ class GroupDiscountSpec extends Specification {
         def group = new Group(adultsCount, childrenCount)
 
         when:
-        def groupDiscount = new GroupDiscount(group, boardingDate)
+        def groupDiscount = new GroupDiscount(group, discountInPeak)
 
         then:
         assert total == adults + children
@@ -58,16 +59,17 @@ class GroupDiscountSpec extends Specification {
         0      | 7        || 7     || false
     }
 
-    def "正常系: #month月#date日の一人分運賃10000円の割引後運賃が#result円"() {
+    def "正常系: #month月#date日のときの割引後運賃が#result円"() {
         setup:
         def boardingDate = new BoardingDate(LocalDate.of(2020, month, date))
+        def discountInPeak = new GroupDiscountInPeak(boardingDate)
         def adultsCount = new AdultsCount(new MembersCount(new FareCount(8)))
         def childrenCount = new ChildrenCount(new MembersCount(new FareCount(0)))
         def group = new Group(adultsCount, childrenCount)
 
         when:
-        def discount = new GroupDiscount(group, boardingDate)
-        def basicFareYen = new BasicFareYen(new FareYen(10000))
+        def discount = new GroupDiscount(group, discountInPeak)
+        def basicFareYen = new BasicFareYen(new FareYen(10010))
 
         then:
         assert discount.calculateBasicFareYen(basicFareYen).fareYen.value == result
