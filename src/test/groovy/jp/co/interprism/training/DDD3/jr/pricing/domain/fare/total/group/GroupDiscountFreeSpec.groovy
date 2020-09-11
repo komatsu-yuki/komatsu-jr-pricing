@@ -5,14 +5,17 @@ import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.ChildrenCount
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.MembersCount
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit.FareCount
+import spock.lang.Shared
 import spock.lang.Specification
 
 import java.time.LocalDate
 
 class GroupDiscountFreeSpec extends Specification {
+    @Shared
+    def boardingDate = new BoardingDate(LocalDate.of(2020, 9, 3))
+
     def "正常系: 合計#total人の団体は#freeTotal人無料になる"() {
         setup:
-        def boardingDate = new BoardingDate(LocalDate.of(2020, 9, 3))
         def adultsCount = new AdultsCount(new MembersCount(new FareCount(adults)))
         def childrenCount = new ChildrenCount(new MembersCount(new FareCount(children)))
         def group = new Group(adultsCount, childrenCount)
@@ -35,13 +38,10 @@ class GroupDiscountFreeSpec extends Specification {
         36     | 15       | 51    || 2          | 0            | 2
         75     | 25       | 100   || 2          | 0            | 2
         78     | 23       | 101   || 3          | 0            | 3
-        120    | 30       | 150   || 3          | 0            | 3
-        115    | 36       | 151   || 4          | 0            | 4
     }
 
     def "正常系: 無料人数が大人の人数より多い場合"() {
         setup:
-        def boardingDate = new BoardingDate(LocalDate.of(2020, 9, 3))
         def adultsCount = new AdultsCount(new MembersCount(new FareCount(adults)))
         def childrenCount = new ChildrenCount(new MembersCount(new FareCount(children)))
         def group = new Group(adultsCount, childrenCount)

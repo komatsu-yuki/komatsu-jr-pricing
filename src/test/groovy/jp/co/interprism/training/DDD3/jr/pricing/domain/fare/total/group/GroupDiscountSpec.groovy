@@ -7,6 +7,7 @@ import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group.member.MembersCount
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit.FareCount
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit.FareYen
+import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -14,9 +15,11 @@ import java.time.LocalDate
 
 @Unroll
 class GroupDiscountSpec extends Specification {
+    @Shared
+    def boardingDate = new BoardingDate(LocalDate.of(2020, 9, 3))
+
     def "正常系: 団体人数#totalのときに利用可能かどうか"() {
         setup:
-        def boardingDate = new BoardingDate(LocalDate.of(2020, 9, 3))
         def adultsCount = new AdultsCount(new MembersCount(new FareCount(adults)))
         def childrenCount = new ChildrenCount(new MembersCount(new FareCount(children)))
         def group = new Group(adultsCount, childrenCount)
@@ -36,7 +39,6 @@ class GroupDiscountSpec extends Specification {
 
     def "正常系: 大人と子どもの比に偏りがある場合"() {
         setup:
-        def boardingDate = new BoardingDate(LocalDate.of(2020, 9, 3))
         def adultsCount = new AdultsCount(new MembersCount(new FareCount(adults)))
         def childrenCount = new ChildrenCount(new MembersCount(new FareCount(children)))
         def group = new Group(adultsCount, childrenCount)
