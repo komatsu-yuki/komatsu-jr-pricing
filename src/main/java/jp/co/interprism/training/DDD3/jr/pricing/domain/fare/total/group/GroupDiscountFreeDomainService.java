@@ -8,20 +8,20 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class GroupDiscountFreeDomainService {
-    private static final MembersCount NO_CHARGE_BOUND_FOR_ONE = new MembersCount(new FareCount(31));//31人以上で1人無料
-    private static final MembersCount NO_CHARGE_CRITERION = new MembersCount(new FareCount(50));//50人増えるごとに1人ずつ無料
+    private static final MembersCount FREE_BOUND_FOR_ONE = new MembersCount(new FareCount(31));//31人以上で1人無料
+    private static final MembersCount FREE_CRITERION = new MembersCount(new FareCount(50));//50人増えるごとに1人ずつ無料
 
     private final GroupDiscount groupDiscount;
 
-    private MembersCount calculateFreeMembersCount() {//TODO リファクタ考慮
+    private MembersCount calculateFreeMembersCount() {
         Group group = groupDiscount.getGroup();
         MembersCount groupMembersCount = group.sumMembersCount();
-        if (groupMembersCount.compareTo(NO_CHARGE_BOUND_FOR_ONE) < 0) return MembersCount.ZERO;
+        if (groupMembersCount.compareTo(FREE_BOUND_FOR_ONE) < 0) return MembersCount.ZERO;
 
         FareCount groupMembersFareCount = groupMembersCount.getFareCount();
         int groupMembersInt = groupMembersFareCount.getValue();
 
-        FareCount freeCriterionFareCount = NO_CHARGE_CRITERION.getFareCount();
+        FareCount freeCriterionFareCount = FREE_CRITERION.getFareCount();
         int freeCriterionInt = freeCriterionFareCount.getValue();
 
         int freeCount = 1 + (groupMembersInt - 1) / freeCriterionInt;

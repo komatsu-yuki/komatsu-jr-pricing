@@ -1,6 +1,5 @@
 package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.group;
 
-import jp.co.interprism.training.DDD3.jr.pricing.domain.boarding.date.BoardingDate;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.basic.BasicFareYen;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.surcharge.superexpress.SuperExpressSurchargeYen;
 import jp.co.interprism.training.DDD3.jr.pricing.domain.fare.total.Discount;
@@ -14,21 +13,20 @@ import lombok.Getter;
 @AllArgsConstructor
 public class GroupDiscount implements Discount {
     private static final FareRate DISCOUNT_RATE = new FareRate(0.85);//15%引き
-    private static final MembersCount DISCOUNT_LOWER_BOUND = new MembersCount(new FareCount(8));//最低8人
+    private static final MembersCount MEMBERS_LOWER_BOUND = new MembersCount(new FareCount(8));//最低8人
 
     private final Group group;
-    private final BoardingDate boardingDate;
+    private final GroupDiscountInPeak discountInPeak;
 
     @Override
     public boolean isAvailable() {
-        return group.sumMembersCount().compareTo(DISCOUNT_LOWER_BOUND) >= 0;
+        return group.sumMembersCount().compareTo(MEMBERS_LOWER_BOUND) >= 0;
     }
 
     @Override
     public BasicFareYen calculateBasicFareYen(BasicFareYen basicFareYen) {
-        GroupDiscountInPeakDomainService inPeakDomainService = new GroupDiscountInPeakDomainService();
-        return inPeakDomainService.inPeak(boardingDate)
-                ? inPeakDomainService.calculateBasicFareYen(basicFareYen)
+        return discountInPeak.inPeak()
+                ? discountInPeak.calculateBasicFareYen(basicFareYen)
                 : basicFareYen.times(DISCOUNT_RATE);
     }
 
