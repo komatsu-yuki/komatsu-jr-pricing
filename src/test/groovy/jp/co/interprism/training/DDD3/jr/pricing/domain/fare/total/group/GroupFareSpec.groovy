@@ -28,7 +28,8 @@ class GroupFareSpec extends Specification {
         def adultsCount = new AdultsCount(new MembersCount(new FareCount(adults)))
         def childrenCount = new ChildrenCount(new MembersCount(new FareCount(children)))
         def group = new Group(adultsCount, childrenCount)
-        def discount = new GroupDiscount(group, boardingDate)
+        def discountInPeak = new GroupDiscountInPeak(boardingDate)
+        def discount = new GroupDiscount(group, discountInPeak)
 
         when:
         def groupFare = new GroupFare(oneWayFare, discount)
@@ -48,7 +49,8 @@ class GroupFareSpec extends Specification {
         def adultsCount = new AdultsCount(new MembersCount(new FareCount(adults)))
         def childrenCount = new ChildrenCount(new MembersCount(new FareCount(children)))
         def group = new Group(adultsCount, childrenCount)
-        def discount = new GroupDiscount(group, boardingDate)
+        def discountInPeak = new GroupDiscountInPeak(boardingDate)
+        def discount = new GroupDiscount(group, discountInPeak)
 
         when:
         def groupFare = new GroupFare(oneWayFare, discount)
@@ -68,7 +70,8 @@ class GroupFareSpec extends Specification {
         def adultsCount = new AdultsCount(new MembersCount(new FareCount(3)))
         def childrenCount = new ChildrenCount(new MembersCount(new FareCount(4)))
         def group = new Group(adultsCount, childrenCount)
-        def discount = new GroupDiscount(group, boardingDate)
+        def discountInPeak = new GroupDiscountInPeak(boardingDate)
+        def discount = new GroupDiscount(group, discountInPeak)
         def groupFare = new GroupFare(oneWayFare, discount)
 
         when:
