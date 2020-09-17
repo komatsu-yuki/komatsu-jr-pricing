@@ -1,7 +1,9 @@
 package jp.co.interprism.training.DDD3.jr.pricing.domain.fare.unit;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+@EqualsAndHashCode
 @Getter
 public class FareYen implements FareUnit<FareYen> {
     public static final FareYen ZERO = new FareYen(0);
