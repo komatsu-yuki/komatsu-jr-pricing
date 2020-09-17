@@ -33,4 +33,9 @@ public class FareYen implements FareUnit<FareYen> {
     public FareYen times(FareCount fareCount) {
         return new FareYen(value * fareCount.getValue());
     }
+
+    @Override
+    public String toString() {
+        return value + "円";
+    }
 }
